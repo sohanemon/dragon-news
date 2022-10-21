@@ -1,70 +1,162 @@
-# Getting Started with Create React App
+# PostCSS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```css
+article {
+  background: purple;
 
-## Available Scripts
+  & .title {
+    /* & represents the article tag */
+    font-size: 6rem;
+  }
 
-In the project directory, you can run:
+  & li {
+    list-style-type: none;
+  }
+}
+```
 
-### `npm start`
+> similar to `article .title {...} and article li {...}`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Now using this in tailwind
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- tailwind have some selector elements which are nothing but [this](./src/assets/Screenshot_2.png)
+- [they are](./src/assets/Screenshot_1.png) built in **_modifiers_** in tailwind
+- use custom modifier as
 
-### `npm test`
+```css
+ <li class="[&:nth-child(3)]:underline">{item}</li>
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+> `&` represents the `li` tag
 
-### `npm run build`
+> at-rules like `@media` or `@supports` also can be inside arbitrary `[]`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- it will work as
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```css
+li:nth-child(3) {
+  text-decoration-style: underline;
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- now first example in tailwind
 
-### `npm run eject`
+```html
+<article className="bg-purple-400 [&.title]:text-8xl [&_li]:list-none">
+  ...
+  <p className="title">...</p>
+  <li>...</li>
+  <li>...</li>
+  <li>...</li>
+</article>
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- though it is same as
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```html
+<article className="bg-purple-400">
+  ...
+  <p className="text-8xl">...</p>
+  <li className="list-none">...</li>
+  <li className="list-none">...</li>
+  <li className="list-none">...</li>
+</article>
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## css selectors comparison
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+for `<div><p>...</p></div>`
 
-## Learn More
+| Selectors         |                 Example                  |       CSS        |        PostCSS |
+| :---------------- | :--------------------------------------: | :--------------: | -------------: |
+| class             | `<div><p className='name'>...</p></div>` |    div .name     |         &.name |
+| id                |    `<div><p id='name'>...</p></div>`     |    div #name     |         &#name |
+| pseudo class      |             `<div>...</div>`             |    div:hover     |        &:hover |
+| pseudo element    |             `<div>...</div>`             | div::first-child | &::first-child |
+| all descendent    |         `<div><p>...</p></div>`          |     div name     |        &\_name |
+| direct descendent |         `<div><p>...</p></div>`          |     div>name     |         &>name |
+| siblings only     |      `<div>...</div><div>...</div>`      |     div~name     |         &~name |
+| next sibling      |      `<div>...</div><div>...</div>`      |     div+name     |         &+name |
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+> though many of these modifiers are prebuilt in tailwind
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+| Modifier          |                                            CSS |
+| ----------------- | ---------------------------------------------: |
+| hover             |                                        &:hover |
+| focus             |                                        &:focus |
+| focus-within      |                                 &:focus-within |
+| focus-visible     |                                &:focus-visible |
+| active            |                                       &:active |
+| visited           |                                      &:visited |
+| target            |                                       &:target |
+| first             |                                  &:first-child |
+| last              |                                   &:last-child |
+| only              |                                   &:only-child |
+| odd               |                               &:nth-child(odd) |
+| even              |                              &:nth-child(even) |
+| first-of-type     |                                &:first-of-type |
+| last-of-type      |                                 &:last-of-type |
+| only-of-type      |                                 &:only-of-type |
+| empty             |                                        &:empty |
+| disabled          |                                     &:disabled |
+| enabled           |                                      &:enabled |
+| checked           |                                      &:checked |
+| indeterminate     |                                &:indeterminate |
+| default           |                                      &:default |
+| required          |                                     &:required |
+| valid             |                                        &:valid |
+| invalid           |                                      &:invalid |
+| in-range          |                                     &:in-range |
+| out-of-range      |                                 &:out-of-range |
+| placeholder-shown |                            &:placeholder-shown |
+| autofill          |                                     &:autofill |
+| read-only         |                                    &:read-only |
+| before            |                                      &::before |
+| after             |                                       &::after |
+| first-letter      |                                &::first-letter |
+| first-line        |                                  &::first-line |
+| marker            |                                      &::marker |
+| selection         |                                   &::selection |
+| file              |                        &::file-selector-button |
+| backdrop          |                                    &::backdrop |
+| placeholder       |                                 &::placeholder |
+| sm                |                      @media (min-width: 640px) |
+| md                |                      @media (min-width: 768px) |
+| lg                |                     @media (min-width: 1024px) |
+| xl                |                     @media (min-width: 1280px) |
+| 2xl               |                     @media (min-width: 1536px) |
+| min-[…]           |                          @media (min-width: …) |
+| max-sm            |          @media not all and (min-width: 640px) |
+| max-md            |          @media not all and (min-width: 768px) |
+| max-lg            |         @media not all and (min-width: 1024px) |
+| max-xl            |         @media not all and (min-width: 1280px) |
+| max-2xl           |         @media not all and (min-width: 1536px) |
+| max-[…]           |                          @media (max-width: …) |
+| dark              |            @media (prefers-color-scheme: dark) |
+| portrait          |                 @media (orientation: portrait) |
+| landscape         |                @media (orientation: landscape) |
+| motion-safe       | @media (prefers-reduced-motion: no-preference) |
+| motion-reduce     |        @media (prefers-reduced-motion: reduce) |
+| contrast-more     |                @media (prefers-contrast: more) |
+| contrast-less     |                @media (prefers-contrast: less) |
+| print             |                                   @media print |
+| supports-[…]      |                                  @supports (…) |
+| aria-checked      |                         &[aria-checked=“true”] |
+| aria-disabled     |                        &[aria-disabled=“true”] |
+| aria-expanded     |                        &[aria-expanded=“true”] |
+| aria-hidden       |                          &[aria-hidden=“true”] |
+| aria-pressed      |                         &[aria-pressed=“true”] |
+| aria-readonly     |                        &[aria-readonly=“true”] |
+| aria-required     |                        &[aria-required=“true”] |
+| aria-selected     |                        &[aria-selected=“true”] |
+| aria-[…]          |                                      &[aria-…] |
+| data-[…]          |                                      &[data-…] |
+| rtl               |                                  [dir=“rtl”] & |
+| ltr               |                                  [dir=“ltr”] & |
+| open              |                                        &[open] |
 
-### Code Splitting
+# Acknowledgement
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- [tailwindcss](https://tailwindcss.com)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [postcss](https://postcss.com)
