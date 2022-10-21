@@ -81,7 +81,7 @@ for `<div><p>...</p></div>`
 > though many of these modifiers are prebuilt in tailwind
 
 | Modifier          |                                            CSS |
-| ----------------- | ---------------------------------------------: |
+| :---------------- | ---------------------------------------------: |
 | hover             |                                        &:hover |
 | focus             |                                        &:focus |
 | focus-within      |                                 &:focus-within |
