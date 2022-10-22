@@ -1,7 +1,7 @@
 import { useUserContext } from "../contexts/user-provider";
 
 const SocialButton = () => {
-  const { loginWithGoogle } = useUserContext();
+  const { loginWithGoogle, loginWithFacebook } = useUserContext();
   return (
     <>
       <div className='flex justify-center gap-5 w-full '>
@@ -35,6 +35,7 @@ const SocialButton = () => {
           <span>Google</span>
         </button>
         <button
+          onClick={loginWithFacebook}
           type='submit'
           className='w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:border-gray-200 hover:bg-gray-200 text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-500 px-'
         >

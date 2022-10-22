@@ -22,7 +22,7 @@ export default function Slider() {
         {[...Array(3).keys()].map((el) => (
           <SwiperSlide key={el}>
             <img
-              className='rounded-md'
+              className='rounded-md -z-20'
               src='https://placeimg.com/640/480/tech'
               alt='ok'
             />

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../contexts/user-provider";
 
 const TopNav = () => {
+  const { user, logOut } = useUserContext();
   return (
     <>
       <header>
@@ -50,50 +52,75 @@ const TopNav = () => {
                 <div className='text-gray-600 lg:pr-4'>
                   <ul className='space-y-6 tracking-wide font-medium text-lg lg:text-sm lg:flex lg:space-y-0'>
                     <li>
-                      <a
+                      <Link
                         to='/'
                         className='block md:px-4 transition hover:text-sky-700'
                       >
                         <span>Home</span>
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         to='/'
                         className='block md:px-4 transition hover:text-sky-700'
                       >
                         <span>Portfolio</span>
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         to='/'
                         className='block md:px-4 transition hover:text-sky-700'
                       >
                         <span>Services</span>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
                 <div className='w-full space-y-2 border-sky-200 flex flex-col -ml-1 sm:flex-row lg:space-y-0 md:w-max lg:border-l'>
-                  <button
-                    type='button'
-                    title='Start buying'
-                    className='w-full py-2.5 px-5 text-center rounded-full transition active:bg-sky-200 focus:bg-sky-100 sm:w-max'
-                  >
-                    <span className='block text-sky-800 font-semibold lg:text-sm'>
-                      Sign up
-                    </span>
-                  </button>
-                  <button
-                    type='button'
-                    title='Start buying'
-                    className='w-full py-2.5 px-5 text-center rounded-full transition bg-gradient-to-b from-sky-400 to-cyan-300 active:from-sky-300 focus:from-cyan-400 sm:w-max'
-                  >
-                    <span className='block text-sky-900 font-semibold lg:text-sm'>
-                      Login
-                    </span>
-                  </button>
+                  {user ? (
+                    <div className='flex items-center pl-3'>
+                      <span className='text-xs'>
+                        {user?.email?.split("@")[0]}
+                      </span>
+                      <img
+                        className='w-7 h-7 rounded-full m-1'
+                        src={user?.photoURL}
+                        alt=''
+                      />
+                      <button
+                        onClick={logOut}
+                        type='button'
+                        title='Start buying'
+                        className='w-full py-2.5 px-5 text-center rounded-full transition active:bg-sky-200 focus:bg-sky-100 sm:w-max'
+                      >
+                        <span className='block text-sky-800 font-semibold lg:text-sm'>
+                          Sign out
+                        </span>
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        type='button'
+                        title='Start buying'
+                        className='w-full py-2.5 px-5 text-center rounded-full transition active:bg-sky-200 focus:bg-sky-100 sm:w-max'
+                      >
+                        <span className='block text-sky-800 font-semibold lg:text-sm'>
+                          Sign up
+                        </span>
+                      </button>
+                      <button
+                        type='button'
+                        title='Start buying'
+                        className='w-full py-2.5 px-5 text-center rounded-full transition bg-gradient-to-b from-sky-400 to-cyan-300 active:from-sky-300 focus:from-cyan-400 sm:w-max'
+                      >
+                        <span className='block text-sky-900 font-semibold lg:text-sm'>
+                          Login
+                        </span>
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

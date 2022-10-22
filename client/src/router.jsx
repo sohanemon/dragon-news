@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Category from "./components/category";
+import Login from "./components/login";
 import News from "./components/news";
 import UserProvider from "./contexts/user-provider";
 import Main from "./Layout/main";
@@ -22,5 +23,9 @@ export const router = createBrowserRouter([
         element: <News />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);

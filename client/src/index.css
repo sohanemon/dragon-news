@@ -8,6 +8,9 @@
   }
 }
 @layer components {
+  .swiper {
+    z-index: -2 !important;
+  }
   .navbar-active .hamburger div:first-child {
     @apply rotate-45 translate-y-1.5;
   }

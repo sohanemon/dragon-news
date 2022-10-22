@@ -8,11 +8,13 @@ import {
   BsYoutube,
 } from "react-icons/bs";
 import Slider from "../slider";
+import { useUserContext } from "../../contexts/user-provider";
 
 const RightNav = () => {
+  const { user } = useUserContext();
   return (
     <section className='mr-3 px-10'>
-      <SocialButton />
+      {!user?.uid && <SocialButton />}
       <div className='flex flex-col gap-1 my-5 tracking-widest'>
         <p>Find us on</p>
         {icons.map((el) => (
