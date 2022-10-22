@@ -1,3 +1,11 @@
+# Node & Express
+
+- `res.send()` sends a response. Works for both object and string
+- `res.json()` sends a **json** response.
+- use middleware as `app.use(middleware_name())`
+
+---
+
 # PostCSS
 
 ```css
@@ -61,6 +69,16 @@ li:nth-child(3) {
   <li className="list-none">...</li>
   <li className="list-none">...</li>
 </article>
+```
+
+## Handling whitespace
+
+When an arbitrary value needs to contain a space, use an underscore (\_) instead and Tailwind will automatically convert it to a space at build-time:
+
+```html
+<div class="grid grid-cols-[1fr_500px_2fr]">
+  <!-- ... -->
+</div>
 ```
 
 ## css selectors comparison
@@ -160,3 +178,38 @@ for `<div><p>...</p></div>`
 - [tailwindcss](https://tailwindcss.com)
 
 - [postcss](https://postcss.com)
+
+# Codemon
+
+- map through react-icons
+
+```js
+const icons = [
+  <BsFacebook />,
+  <BsTwitter />,
+  <BsYoutube />,
+  <BsReddit />,
+  <BsWhatsapp />,
+  <BsDiscord />,
+];
+```
+
+```js
+return (
+  <section className='mr-3'>
+    <SocialButton />
+    <div className='flex flex-col gap-1 mt-3 p-5 tracking-widest'>
+      {icons.map((el) => (
+        <div className='flex items-center gap-3 border p-2 text-2xl rounded-md cursor-pointer hover:shadow-md shadow-sm'>
+          {el}
+          <p className='text-base'>{el.type.name.replace("Bs", "")}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+```
+
+Output:
+
+![screenshot](./client/src/assets/r.png)
