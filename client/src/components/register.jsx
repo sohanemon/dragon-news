@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/user-provider";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { sliceError } from "../utilities/slice-error";
 const Register = () => {
   const { loginWithGoogle, loginWithFacebook, createUser } = useUserContext();
@@ -12,6 +12,7 @@ const Register = () => {
   const { handleSubmit, register } = useForm();
   const location = useLocation();
   const [message, setMessage] = useState(null);
+  const [termsAndConditions, setTermsAndConditions] = useState(false);
   const handleRegister = (data) => {
     setMessage(null);
     createUser(data.email, data.password, data.name, data.photoURL)
@@ -61,6 +62,7 @@ const Register = () => {
                   </div>
                 </button>
               </div>
+
               <form
                 onSubmit={handleSubmit(handleRegister)}
                 className='mt-10 space-y-8 '
@@ -105,8 +107,23 @@ const Register = () => {
                     />
                   </div>
                 </div>
+                <input
+                  onClick={() => setTermsAndConditions((e) => !e)}
+                  className='accent-cyan-400'
+                  type='checkbox'
+                  id='checkbox'
+                />{" "}
+                <label
+                  htmlFor='checkbox'
+                  className='text-gray-600 tracking-wide text-sm select-none'
+                >
+                  Accept terms and conditions.
+                </label>
                 <div>
-                  <button className='w-full rounded-full bg-sky-500  h-11 flex items-center justify-center px-6 py-3 transition hover:bg-sky-600 focus:bg-sky-600 active:bg-sky-800'>
+                  <button
+                    disabled={termsAndConditions ? false : true}
+                    className='w-full rounded-full bg-sky-500 disabled:bg-sky-200  h-11 flex items-center justify-center px-6 py-3 transition hover:bg-sky-600 focus:bg-sky-600 active:bg-sky-800'
+                  >
                     <span className='text-base font-semibold text-white '>
                       Register
                     </span>
