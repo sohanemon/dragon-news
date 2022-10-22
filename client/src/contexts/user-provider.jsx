@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import {
   GoogleAuthProvider,
@@ -19,6 +20,7 @@ const UserProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        console.log("🚀 > unsubscribe > user", user);
       } else {
         console.log("no previous login");
       }
@@ -42,8 +44,11 @@ const UserProvider = ({ children }) => {
       .then((result) => {})
       .catch((error) => {});
   };
-  const createUser = (email, password) =>
-    createUserWithEmailAndPassword(auth, email, password);
+  const createUser = async (email, password, displayName, photoURL) => {
+    return createUserWithEmailAndPassword(auth, email, password).then(() => {
+      updateProfile(auth.currentUser, { displayName, photoURL });
+    });
+  };
   const signIn = (email, password) =>
     signInWithEmailAndPassword(auth, email, password);
 

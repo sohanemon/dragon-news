@@ -15,7 +15,12 @@ const LeftNav = () => {
     <section className='list-none font-semibold tracking-[1px] ml-3 space-y-4 '>
       {categories.map((el) => (
         <p key={el.id}>
-          <NavLink to={`/category/${el.id}`}>{el.name}</NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? "text-cyan-600" : "")}
+            to={`/category/${el.id}`}
+          >
+            {el.name}
+          </NavLink>
         </p>
       ))}
     </section>

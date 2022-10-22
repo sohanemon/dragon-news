@@ -103,6 +103,7 @@ const TopNav = () => {
                   ) : (
                     <>
                       <button
+                        onClick={() => navigate("/register")}
                         type='button'
                         title='Start buying'
                         className='w-full py-2.5 px-5 text-center rounded-full transition active:bg-sky-200 focus:bg-sky-100 sm:w-max'

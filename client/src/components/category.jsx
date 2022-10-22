@@ -14,11 +14,13 @@ const Category = () => {
 
   return (
     <section>
-      {!id ? (
-        <h1>All news</h1>
-      ) : (
-        <h1>Total {categoryData?.length} data in this category</h1>
-      )}
+      <div className='sticky top-[65px] bg-white pb-3 tracking-wider'>
+        {!id ? (
+          <h1>All news</h1>
+        ) : (
+          <h1>Total {categoryData?.length} data in this category</h1>
+        )}
+      </div>
 
       <br />
       {categoryData &&

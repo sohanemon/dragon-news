@@ -4,6 +4,8 @@ import Login from "./components/login";
 import News from "./components/news";
 import Register from "./components/register";
 import Main from "./Layout/main";
+import Secondary from "./Layout/secondary";
+import PrivateRoute from "./routes/private-route";
 
 export const router = createBrowserRouter([
   {
@@ -11,25 +13,35 @@ export const router = createBrowserRouter([
     element: <Main />,
     children: [
       {
-        path: "",
-        element: <Category />,
+        path: "/",
+        element: <Secondary />,
+        children: [
+          {
+            path: "",
+            element: <Category />,
+          },
+          {
+            path: "/category/:id",
+            element: <Category />,
+          },
+          {
+            path: "/news/:id",
+            element: (
+              <PrivateRoute>
+                <News />
+              </PrivateRoute>
+            ),
+          },
+        ],
       },
       {
-        path: "/category/:id",
-        element: <Category />,
+        path: "/login",
+        element: <Login />,
       },
       {
-        path: "/news/:id",
-        element: <News />,
+        path: "/register",
+        element: <Register />,
       },
     ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
   },
 ]);
