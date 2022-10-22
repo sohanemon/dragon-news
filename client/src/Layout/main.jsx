@@ -5,12 +5,13 @@ import TopNav from "../components/common/top-nav";
 
 const Main = () => {
   return (
-    <div>
+    <div className='relative'>
       <nav className='sticky w-full top-0 mb-4'>
         <TopNav />
       </nav>
       <div className='grid grid-cols-12'>
-        <aside className='col-span-2'>
+        <aside className='col-span-2 h-min sticky top-24'>
+          {/* note: when sticky top not works */}
           <LeftNav />
         </aside>
         <main className='col-span-7'>

@@ -1,4 +1,8 @@
-import { FacebookAuthProvider } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  FacebookAuthProvider,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -35,11 +39,13 @@ const UserProvider = ({ children }) => {
   const loginWithFacebook = () => {
     const provider = new FacebookAuthProvider();
     signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log("🚀 > .then > result", result);
-      })
+      .then((result) => {})
       .catch((error) => {});
   };
+  const createUser = (email, password) =>
+    createUserWithEmailAndPassword(auth, email, password);
+  const signIn = (email, password) =>
+    signInWithEmailAndPassword(auth, email, password);
 
   const logOut = () => {
     signOut(auth)
@@ -53,7 +59,14 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, loginWithGoogle, loginWithFacebook, logOut }}
+      value={{
+        user,
+        loginWithGoogle,
+        loginWithFacebook,
+        logOut,
+        createUser,
+        signIn,
+      }}
     >
       {children}
     </UserContext.Provider>

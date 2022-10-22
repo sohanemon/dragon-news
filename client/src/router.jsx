@@ -2,18 +2,18 @@ import { createBrowserRouter } from "react-router-dom";
 import Category from "./components/category";
 import Login from "./components/login";
 import News from "./components/news";
-import UserProvider from "./contexts/user-provider";
+import Register from "./components/register";
 import Main from "./Layout/main";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <UserProvider>
-        <Main />
-      </UserProvider>
-    ),
+    element: <Main />,
     children: [
+      {
+        path: "",
+        element: <Category />,
+      },
       {
         path: "/category/:id",
         element: <Category />,
@@ -27,5 +27,9 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);

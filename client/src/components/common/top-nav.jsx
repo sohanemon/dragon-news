@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../contexts/user-provider";
 
 const TopNav = () => {
   const { user, logOut } = useUserContext();
+  const navigate = useNavigate();
   return (
     <>
       <header>
@@ -111,6 +112,7 @@ const TopNav = () => {
                         </span>
                       </button>
                       <button
+                        onClick={() => navigate("/login")}
                         type='button'
                         title='Start buying'
                         className='w-full py-2.5 px-5 text-center rounded-full transition bg-gradient-to-b from-sky-400 to-cyan-300 active:from-sky-300 focus:from-cyan-400 sm:w-max'

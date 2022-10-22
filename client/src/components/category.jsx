@@ -6,7 +6,7 @@ const Category = () => {
   const { id } = useParams();
   const [categoryData, setCategoryData] = useState([]);
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_HOST}/category/${id}`)
+    fetch(`${process.env.REACT_APP_HOST}/category/${id || "08"}`)
       .then((res) => res.json())
       .then((data) => setCategoryData(data));
     return () => {};
@@ -14,7 +14,12 @@ const Category = () => {
 
   return (
     <section>
-      <h1>Total {categoryData?.length} data in this category</h1>
+      {!id ? (
+        <h1>All news</h1>
+      ) : (
+        <h1>Total {categoryData?.length} data in this category</h1>
+      )}
+
       <br />
       {categoryData &&
         categoryData?.map((el) => <NewsArticle key={el._id} {...el} />)}
