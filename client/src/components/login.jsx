@@ -2,21 +2,21 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsFacebook } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/user-provider";
 import { sliceError } from "../utilities/slice-error";
 const Login = () => {
   const { loginWithGoogle, loginWithFacebook, signIn } = useUserContext();
   const navigate = useNavigate();
   const [message, setMessage] = useState(null);
+  const location = useLocation();
   const { handleSubmit, register } = useForm();
   const handleSignIn = (data) => {
     setMessage(null);
     signIn(data.email, data.password)
-      .then(() => navigate("/"))
+      .then(() => navigate(location.state?.pathname || "/", { replace: true }))
       .catch((error) => setMessage(sliceError(error)));
   };
-
   return (
     <>
       <div className='m-auto container px-12 sm:px-0 mx-auto'>
@@ -25,7 +25,13 @@ const Login = () => {
             <div className='mt-12 rounded-3xl border bg-gray-50   -mx-6 sm:-mx-10 p-8 sm:p-10'>
               <div className='grid gap-6 sm:grid-cols-2'>
                 <button
-                  onClick={loginWithGoogle}
+                  onClick={() =>
+                    loginWithGoogle().then(() =>
+                      navigate(location.state?.pathname || "/", {
+                        replace: true,
+                      })
+                    )
+                  }
                   className='h-11 rounded-full border border-gray-300/75 bg-white px-6 transition active:bg-gray-50  '
                 >
                   <div className='flex items-center justify-center space-x-4'>
@@ -36,7 +42,13 @@ const Login = () => {
                   </div>
                 </button>
                 <button
-                  onClick={loginWithFacebook}
+                  onClick={() =>
+                    loginWithFacebook().then(() =>
+                      navigate(location.state?.pathname || "/", {
+                        replace: true,
+                      })
+                    )
+                  }
                   className='h-11 rounded-full border border-gray-300/75 bg-white px-6 transition active:bg-gray-50'
                 >
                   <div className='flex items-center justify-center space-x-4 text-white'>

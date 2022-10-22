@@ -1,6 +1,6 @@
 import { BsFacebook } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/user-provider";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -10,6 +10,7 @@ const Register = () => {
 
   const navigate = useNavigate();
   const { handleSubmit, register } = useForm();
+  const location = useLocation();
   const [message, setMessage] = useState(null);
   const handleRegister = (data) => {
     setMessage(null);
@@ -26,7 +27,13 @@ const Register = () => {
             <div className='mt-12 rounded-3xl border bg-gray-50   -mx-6 sm:-mx-10 p-8 sm:p-10'>
               <div className='grid gap-6 sm:grid-cols-2'>
                 <button
-                  onClick={loginWithGoogle}
+                  onClick={() =>
+                    loginWithGoogle().then(() =>
+                      navigate(location.state?.pathname || "/", {
+                        replace: true,
+                      })
+                    )
+                  }
                   className='h-11 rounded-full border border-gray-300/75 bg-white px-6 transition active:bg-gray-50  '
                 >
                   <div className='flex items-center justify-center space-x-4'>
@@ -37,7 +44,13 @@ const Register = () => {
                   </div>
                 </button>
                 <button
-                  onClick={loginWithFacebook}
+                  onClick={() =>
+                    loginWithFacebook().then(() =>
+                      navigate(location.state?.pathname || "/", {
+                        replace: true,
+                      })
+                    )
+                  }
                   className='h-11 rounded-full border border-gray-300/75 bg-white px-6 transition active:bg-gray-50'
                 >
                   <div className='flex items-center justify-center space-x-4 text-white'>

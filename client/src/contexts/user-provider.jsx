@@ -16,7 +16,9 @@ import { auth } from "../firebase/common";
 const UserContext = createContext({});
 export const useUserContext = () => useContext(UserContext);
 const UserProvider = ({ children }) => {
+  const [isUserLoaded, setIsUserLoaded] = useState(false);
   useEffect(() => {
+    setIsUserLoaded(false);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
@@ -24,6 +26,7 @@ const UserProvider = ({ children }) => {
       } else {
         console.log("no previous login");
       }
+      setIsUserLoaded(true);
     });
 
     return () => {
@@ -31,28 +34,30 @@ const UserProvider = ({ children }) => {
     };
   }, []);
 
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const loginWithGoogle = () => {
+    setIsUserLoaded(false);
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {})
-      .catch((error) => {});
+    return signInWithPopup(auth, provider);
   };
   const loginWithFacebook = () => {
+    setIsUserLoaded(false);
     const provider = new FacebookAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {})
-      .catch((error) => {});
+    return signInWithPopup(auth, provider);
   };
   const createUser = async (email, password, displayName, photoURL) => {
+    setIsUserLoaded(false);
     return createUserWithEmailAndPassword(auth, email, password).then(() => {
       updateProfile(auth.currentUser, { displayName, photoURL });
     });
   };
-  const signIn = (email, password) =>
-    signInWithEmailAndPassword(auth, email, password);
+  const signIn = (email, password) => {
+    setIsUserLoaded(false);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
   const logOut = () => {
+    setIsUserLoaded(false);
     signOut(auth)
       .then(() => {
         setUser(null);
@@ -71,6 +76,7 @@ const UserProvider = ({ children }) => {
         logOut,
         createUser,
         signIn,
+        isUserLoaded,
       }}
     >
       {children}
