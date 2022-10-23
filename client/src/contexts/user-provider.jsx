@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
@@ -11,6 +12,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { auth } from "../firebase/common";
 
 const UserContext = createContext({});
@@ -49,6 +51,11 @@ const UserProvider = ({ children }) => {
     setIsUserLoaded(false);
     return createUserWithEmailAndPassword(auth, email, password).then(() => {
       updateProfile(auth.currentUser, { displayName, photoURL });
+      sendEmailVerification(auth.currentUser)
+        .then(() => {
+          toast.error("Verify your email");
+        })
+        .catch((error) => console.log(error));
     });
   };
   const signIn = (email, password) => {

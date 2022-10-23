@@ -1,9 +1,9 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { BsFacebook } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/user-provider";
-import { useForm } from "react-hook-form";
-import { useRef, useState } from "react";
 import { sliceError } from "../utilities/slice-error";
 const Register = () => {
   const { loginWithGoogle, loginWithFacebook, createUser } = useUserContext();
@@ -117,7 +117,8 @@ const Register = () => {
                   htmlFor='checkbox'
                   className='text-gray-600 tracking-wide text-sm select-none'
                 >
-                  Accept terms and conditions.
+                  Accept{" "}
+                  <Link to={"/terms-conditons"}>terms and conditions</Link>.
                 </label>
                 <div>
                   <button

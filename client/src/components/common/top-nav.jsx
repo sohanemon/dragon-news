@@ -6,7 +6,7 @@ const TopNav = () => {
   const navigate = useNavigate();
   return (
     <>
-      <header>
+      <header className='!z-50'>
         <input
           type='checkbox'
           name='hbr'
