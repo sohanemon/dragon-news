@@ -1,3 +1,6 @@
+# About Dragon News
+server: https://api-dragon-news.vercel.app
+
 # Node & Express
 
 - `res.send()` sends a response. Works for both object and string
