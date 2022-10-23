@@ -24,9 +24,6 @@ const UserProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        console.log("🚀 > unsubscribe > user", user);
-      } else {
-        console.log("no previous login");
       }
       setIsUserLoaded(true);
     });
